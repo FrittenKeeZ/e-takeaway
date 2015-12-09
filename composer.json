@@ -1,0 +1,24 @@
+{
+  "name": "frittenkeez/e-takeaway",
+  "description": "API integration for e-takeaway partner functions (http://api.e-takeaway.com/V1/Documentation/)",
+  "type": "library",
+  "keywords": ["etakeaway", "e-takeaway"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Frederik Sauer",
+      "email": "fritten.keez@gmail.com",
+      "homepage": "http://frebs.dk",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Etakeaway\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}
