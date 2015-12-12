@@ -1,6 +1,6 @@
 <?php
 
-namespace Etakeawa\Entity;
+namespace Etakeaway\Entity;
 
 /**
  * Request.
@@ -62,9 +62,9 @@ class Request implements \JsonSerializable
     private $function;
 
     /**
-     * An AbstractData object that needs to be passed on to the called API function.
+     * A DataInterface object that needs to be passed on to the called API function.
      *
-     * @var AbstractData
+     * @var DataInterface
      */
     private $data;
 
@@ -225,11 +225,11 @@ class Request implements \JsonSerializable
     /**
      * Set data.
      *
-     * @param AbstractData $data
+     * @param DataInterface $data
      *
      * @return Request
      */
-    public function setData(AbstractData $data)
+    public function setData(DataInterface $data = null)
     {
         $this->data = $data;
 
@@ -239,7 +239,7 @@ class Request implements \JsonSerializable
     /**
      * Get data.
      *
-     * @return AbstractData
+     * @return DataInterface
      */
     public function getData()
     {

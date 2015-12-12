@@ -63,12 +63,12 @@ class Api
     /**
      * Dispatches a request to e-takeaway.
      *
-     * @param string              $function API function name.
-     * @param Entity\AbstractData $data     Data object.
+     * @param string               $function API function name.
+     * @param Entity\DataInterface $data     DataInterface object. Defaults to null.
      *
      * @return Entity\Response
      */
-    public function dispatch($function, Entity\AbstractData $data)
+    public function dispatch($function, Entity\DataInterface $data = null)
     {
         // Clone the previous request, retaining necessary properties.
         $this->request = clone $this->request;
@@ -82,7 +82,17 @@ class Api
         $response = curl_exec($ch);
         curl_close($ch);
 
-        return $response;
+        return $this->convertResponseData($response);
+    }
+
+    /**
+     * Checks whether the calling client's reported version number is still supported by the API.
+     *
+     * @return Entity\Response
+     */
+    public function checkVersion()
+    {
+        return $this->dispatch('CheckVersion');
     }
 
     /**
@@ -101,5 +111,40 @@ class Api
             // Pass request data as a param string instead of an array to prevent encoding which breaks the API endpoint.
             \CURLOPT_POSTFIELDS => 'jsonrequest=' . json_encode($request),
         );
+    }
+
+    /**
+     * Converts a primitive stdClass response data object to a Response object.
+     *
+     * @param \stdClass $responseData
+     *
+     * @return Entity\Response
+     */
+    private function convertResponseData(\stdClass $responseData)
+    {
+        $response = new Entity\Response($responseData->Status, $responseData->StatusCode);
+        $response
+            ->setStatusMessage($responseData->StatusMessage)
+            ->setLanguage($responseData->Language)
+            ->setTestMode($responseData->TestMode)
+            ->setFunction($responseData->Function)
+        ;
+
+        // Set error message if it exists.
+        if (isset($responseData->ErrorMessage)) {
+            $response->setErrorMessage($responseData->ErrorMessage);
+        }
+
+        // Set data if it exists.
+        if (isset($responseData->Data)) {
+            $convertMethod = 'convert' . $responseData->Function . 'Data';
+            if (method_exists($this, $convertMethod)) {
+                $response->setData($this->$convertMethod($responseData->Data));
+            } else {
+                $response->setData(new Entity\DataBasic($responseData->Data));
+            }
+        }
+
+        return $response;
     }
 }

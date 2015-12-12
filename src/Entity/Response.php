@@ -1,6 +1,6 @@
 <?php
 
-namespace Etakeawa\Entity;
+namespace Etakeaway\Entity;
 
 /**
  * Response.
@@ -59,9 +59,9 @@ class Response
     private $function;
 
     /**
-     * An AbstractData object that is returned by the called API function.
+     * A DataInterface object that is returned by the called API function.
      *
-     * @var AbstractData
+     * @var DataInterface
      */
     private $data;
 
@@ -220,11 +220,11 @@ class Response
     /**
      * Set data.
      *
-     * @param AbstractData $data
+     * @param DataInterface $data
      *
      * @return Response
      */
-    public function setData(AbstractData $data)
+    public function setData(DataInterface $data = null)
     {
         $this->data = $data;
 
@@ -234,7 +234,7 @@ class Response
     /**
      * Get data.
      *
-     * @return AbstractData
+     * @return DataInterface
      */
     public function getData()
     {

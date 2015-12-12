@@ -1,13 +1,15 @@
 <?php
 
-namespace Etakeawa\Entity;
+namespace Etakeaway\Entity\Partner;
+
+use Etakeaway\Entity\DataInterface;
 
 /**
- * AbstractData.
+ * ExternalOrderBase.
  *
- * @implements \JsonSerializable
+ * @implements DataInterface
  */
-abstract class AbstractData implements \JsonSerializable
+class ExternalOrderBase implements DataInterface
 {
     /**
      * Unique ID for the partner in the e-takeaway database.
@@ -24,15 +26,24 @@ abstract class AbstractData implements \JsonSerializable
     private $restaurantId;
 
     /**
+     * Unique ID for the original order in the partner's database.
+     *
+     * @var string
+     */
+    private $orderId;
+
+    /**
      * Constructor.
      *
-     * @param int $partnerId    Unique partner ID.
-     * @param int $restaurantId Unique restaurant ID.
+     * @param int    $partnerId    Unique partner ID.
+     * @param int    $restaurantId Unique restaurant ID.
+     * @param string $orderId      Unique order ID.
      */
-    public function __construct($partnerId, $restaurantId)
+    public function __construct($partnerId, $restaurantId, $orderId)
     {
         $this->partnerId = $partnerId;
         $this->restaurantId = $restaurantId;
+        $this->orderId = $orderId;
     }
 
     /**
@@ -56,6 +67,16 @@ abstract class AbstractData implements \JsonSerializable
     }
 
     /**
+     * Get order ID.
+     *
+     * @return string
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function jsonSerialize()
@@ -63,6 +84,7 @@ abstract class AbstractData implements \JsonSerializable
         return array(
             'PartnerID' => $this->partnerId,
             'RestaurantID' => $this->restaurantId,
+            'OrderID' => $this->orderId,
         );
     }
 }
