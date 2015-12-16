@@ -4,8 +4,10 @@ namespace Etakeaway\Entity;
 
 /**
  * Response.
+ *
+ * @final
  */
-class Response
+final class Response
 {
     /**
      * Tells whether the call was Successful (true) or Failed (false).

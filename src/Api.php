@@ -3,7 +3,7 @@
 namespace Etakeaway;
 
 /**
- * API class for e-takeaway partner functions.
+ * API class for e-takeaway integration.
  *
  * @see http://api.e-takeaway.com/V1/Documentation/
  */
@@ -88,6 +88,8 @@ class Api
     /**
      * Checks whether the calling client's reported version number is still supported by the API.
      *
+     * @see http://api.e-takeaway.com/V1/Documentation/?p=F_CheckVersion
+     *
      * @return Entity\Response
      */
     public function checkVersion()
@@ -110,6 +112,8 @@ class Api
             \CURLOPT_POST => true,
             // Pass request data as a param string instead of an array to prevent encoding which breaks the API endpoint.
             \CURLOPT_POSTFIELDS => 'jsonrequest=' . json_encode($request),
+            // Eliminate the 'Expect' header to avoid sudden 417 Expectation Failed errors.
+            \CURLOPT_HTTPHEADER => ['Expect:'],
         );
     }
 

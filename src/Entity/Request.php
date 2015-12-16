@@ -6,8 +6,10 @@ namespace Etakeaway\Entity;
  * Request.
  *
  * @implements \JsonSerializable
+ *
+ * @final
  */
-class Request implements \JsonSerializable
+final class Request implements \JsonSerializable
 {
     /**
      * Website ID that identifies the website and database to connect to.
