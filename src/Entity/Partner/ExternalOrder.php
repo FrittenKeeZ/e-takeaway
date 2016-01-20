@@ -32,21 +32,21 @@ class ExternalOrder extends ExternalOrderBase
      *
      * @var float
      */
-    private $deliveryFee;
+    private $deliveryFee = 0;
 
     /**
      * The price of the original order, without delivery fee added.
      *
      * @var float
      */
-    private $orderPrice;
+    private $orderPrice = 0;
 
     /**
      * The total price of the original order, with e-takeaway's delivery fee added.
      *
      * @var float
      */
-    private $totalPrice;
+    private $totalPrice = 0;
 
     /**
      * The date and time when the order should be picked up by the delivery driver.
@@ -118,7 +118,7 @@ class ExternalOrder extends ExternalOrderBase
      *
      * @var int
      */
-    private $recipientCount;
+    private $recipientCount = 0;
 
     /**
      * The customer's comments for the order, that will be read by the delivery driver too.
@@ -139,7 +139,7 @@ class ExternalOrder extends ExternalOrderBase
      *
      * @var array<Order\Item>
      */
-    private $orderItems = array();
+    private $orderItems = [];
 
     /**
      * Adds an Order\Item entity to the list.
@@ -156,7 +156,7 @@ class ExternalOrder extends ExternalOrderBase
      */
     public function clearOrderItems()
     {
-        $this->orderItems = array();
+        $this->orderItems = [];
     }
 
     /**
@@ -174,17 +174,45 @@ class ExternalOrder extends ExternalOrderBase
      */
     public function jsonSerialize()
     {
-        $json = parent::jsonSerialize() + array(
+        $json = parent::jsonSerialize() + [
+            'OrderPrice' => $this->orderPrice,
+            'RecipientName' => $this->recipientName,
+            'RecipientAddress' => $this->recipientAddress,
+            'RecipientPhone' => $this->recipientPhone,
+            'RecipientLocation' => $this->recipientLocation,
             'OrderDetails' => implode('\r\n', $this->orderItems),
-        );
+        ];
 
-        if ($this->pickupDate) {
+        if ($this->deliveryFee > 0) {
+            $json['DeliveryFee'] = $this->deliveryFee;
+        }
+
+        if ($this->pickupDate instanceof \DateTime) {
             $json['PickupDate'] = $this->formatTime($this->pickupDate);
         }
 
-        if ($this->deliveryDate) {
+        if ($this->deliveryDate instanceof \DateTime) {
             $json['DeliveryDate'] = $this->formatTime($this->deliveryDate);
         }
+
+        if (!empty($this->recipientAddressNotes)) {
+            $json['RecipientAddressNotes'] = $this->recipientAddressNotes;
+        }
+
+        if (!empty($this->recipientCompany)) {
+            $json['RecipientCompany'] = $this->recipientCompany;
+        }
+
+        if ($this->recipientCount > 0) {
+            $json['RecipientCount'] = $this->recipientCount;
+        }
+
+        if (!empty($this->orderComments)) {
+            $json['OrderComments'] = $this->orderComments;
+        }
+
+        // Sort array by key for testing consistency.
+        ksort($json);
 
         return $json;
     }

@@ -16,7 +16,7 @@ final class DataBasic implements DataInterface
      *
      * @var array
      */
-    private $data = array();
+    private $data = [];
 
     /**
      * Constructor.

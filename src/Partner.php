@@ -2,6 +2,9 @@
 
 namespace Etakeaway;
 
+use Etakeaway\Entity\Partner\DeliveryInfo;
+use Etakeaway\Entity\Partner\ExternalOrderBase;
+
 /**
  * Implementation of partner functions.
  *
@@ -21,7 +24,7 @@ class Partner extends Api
      *
      * @return Entity\Response
      */
-    public function cancelExternalOrder(Entity\Partner\ExternalOrderBase $externalOrder)
+    public function cancelExternalOrder(ExternalOrderBase $externalOrder)
     {
         return $this->dispatch('CancelExternalOrder', $externalOrder);
     }
@@ -35,7 +38,7 @@ class Partner extends Api
      *
      * @return Entity\Response
      */
-    public function getDeliveryInfo(Entity\Partner\DeliveryInfo $deliveryInfo)
+    public function getDeliveryInfo(DeliveryInfo $deliveryInfo)
     {
         return $this->dispatch('GetDeliveryInfo', $deliveryInfo);
     }
@@ -49,6 +52,6 @@ class Partner extends Api
      */
     protected function convertGetDeliveryInfoData(\stdClass $data)
     {
-        return Entity\Partner\DeliveryInfo::createFromData($data);
+        return DeliveryInfo::createFromData($data);
     }
 }

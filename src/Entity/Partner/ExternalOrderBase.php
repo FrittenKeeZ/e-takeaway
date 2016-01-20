@@ -41,9 +41,9 @@ class ExternalOrderBase implements DataInterface
      */
     public function __construct($partnerId, $restaurantId, $orderId)
     {
-        $this->partnerId = $partnerId;
-        $this->restaurantId = $restaurantId;
-        $this->orderId = $orderId;
+        $this->partnerId = (int) $partnerId;
+        $this->restaurantId = (int) $restaurantId;
+        $this->orderId = (string) $orderId;
     }
 
     /**
@@ -81,10 +81,15 @@ class ExternalOrderBase implements DataInterface
      */
     public function jsonSerialize()
     {
-        return array(
+        $json = [
             'PartnerID' => $this->partnerId,
             'RestaurantID' => $this->restaurantId,
             'OrderID' => $this->orderId,
-        );
+        ];
+
+        // Sort array by key for testing consistency.
+        ksort($json);
+
+        return $json;
     }
 }

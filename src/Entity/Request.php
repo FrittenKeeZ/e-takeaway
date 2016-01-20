@@ -113,7 +113,7 @@ final class Request implements \JsonSerializable
      */
     public function setClientVersion($clientVersion)
     {
-        $this->clientVersion = $clientVersion;
+        $this->clientVersion = (float) $clientVersion;
 
         return $this;
     }
@@ -161,7 +161,7 @@ final class Request implements \JsonSerializable
      */
     public function setTestMode($testMode)
     {
-        $this->testMode = $testMode;
+        $this->testMode = $testMode ? true : false;
 
         return $this;
     }
@@ -262,7 +262,7 @@ final class Request implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return array(
+        $json = [
             'Website' => $this->website,
             'ClientCode' => $this->clientCode,
             'ClientVersion' => $this->clientVersion,
@@ -271,6 +271,11 @@ final class Request implements \JsonSerializable
             'UserToken' => $this->userToken,
             'Function' => $this->function,
             'Data' => $this->data,
-        );
+        ];
+
+        // Sort array by key for testing consistency.
+        ksort($json);
+
+        return $json;
     }
 }

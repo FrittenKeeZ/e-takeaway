@@ -2,6 +2,11 @@
 
 namespace Etakeaway;
 
+use Etakeaway\Entity\DataBasic;
+use Etakeaway\Entity\DataInterface;
+use Etakeaway\Entity\Request;
+use Etakeaway\Entity\Response;
+
 /**
  * API class for e-takeaway integration.
  *
@@ -35,7 +40,7 @@ class Api
      *
      * @param Entity\Request $request Initial request object, which will be cloned for subsequent calls.
      */
-    public function __construct(Entity\Request $request)
+    public function __construct(Request $request)
     {
         $this->request = $request;
     }
@@ -68,7 +73,7 @@ class Api
      *
      * @return Entity\Response
      */
-    public function dispatch($function, Entity\DataInterface $data = null)
+    public function dispatch($function, DataInterface $data = null)
     {
         // Clone the previous request, retaining necessary properties.
         $this->request = clone $this->request;
@@ -104,9 +109,9 @@ class Api
      *
      * @return array
      */
-    protected function formatCurlOptions(Entity\Request $request)
+    protected function formatCurlOptions(Request $request)
     {
-        return array(
+        return [
             \CURLOPT_HEADER => false,
             \CURLOPT_RETURNTRANSFER => true,
             \CURLOPT_POST => true,
@@ -114,7 +119,7 @@ class Api
             \CURLOPT_POSTFIELDS => 'jsonrequest=' . json_encode($request),
             // Eliminate the 'Expect' header to avoid sudden 417 Expectation Failed errors.
             \CURLOPT_HTTPHEADER => ['Expect:'],
-        );
+        ];
     }
 
     /**
@@ -126,7 +131,7 @@ class Api
      */
     private function convertResponseData(\stdClass $responseData)
     {
-        $response = new Entity\Response($responseData->Status, $responseData->StatusCode);
+        $response = new Response($responseData->Status, $responseData->StatusCode);
         $response
             ->setStatusMessage($responseData->StatusMessage)
             ->setLanguage($responseData->Language)
@@ -145,7 +150,7 @@ class Api
             if (method_exists($this, $convertMethod)) {
                 $response->setData($this->$convertMethod($responseData->Data));
             } else {
-                $response->setData(new Entity\DataBasic($responseData->Data));
+                $response->setData(new DataBasic($responseData->Data));
             }
         }
 

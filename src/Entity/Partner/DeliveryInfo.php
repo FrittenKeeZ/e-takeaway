@@ -58,21 +58,21 @@ class DeliveryInfo implements DataInterface
      *
      * @var int
      */
-    private $deliveryDelayTime;
+    private $deliveryDelayTime = 0;
 
     /**
      * The calculated delivery time in minutes, including DeliveryDelayTime.
      *
      * @var int
      */
-    private $deliveryTime;
+    private $deliveryTime = 0;
 
     /**
      * The calculated delivery fee in the country's default currency.
      *
      * @var float
      */
-    private $deliveryFee;
+    private $deliveryFee = 0;
 
     /**
      * Constructor.
@@ -82,8 +82,8 @@ class DeliveryInfo implements DataInterface
      */
     public function __construct($partnerId, $restaurantId)
     {
-        $this->partnerId = $partnerId;
-        $this->restaurantId = $restaurantId;
+        $this->partnerId = (int) $partnerId;
+        $this->restaurantId = (int) $restaurantId;
     }
 
     /**
@@ -127,7 +127,7 @@ class DeliveryInfo implements DataInterface
      *
      * @return DeliveryInfo
      */
-    public function setPickupDate($pickupDate)
+    public function setPickupDate(\DateTime $pickupDate)
     {
         $this->pickupDate = $pickupDate;
 
@@ -151,7 +151,7 @@ class DeliveryInfo implements DataInterface
      *
      * @return DeliveryInfo
      */
-    public function setDeliveryDate($deliveryDate)
+    public function setDeliveryDate(\DateTime $deliveryDate)
     {
         $this->deliveryDate = $deliveryDate;
 
@@ -203,19 +203,22 @@ class DeliveryInfo implements DataInterface
      */
     public function jsonSerialize()
     {
-        $json = array(
+        $json = [
             'PartnerID' => $this->partnerId,
             'RestaurantID' => $this->restaurantId,
             'Location' => $this->location,
-        );
+        ];
 
-        if ($this->pickupDate) {
+        if ($this->pickupDate instanceof \DateTime) {
             $json['PickupDate'] = $this->formatTime($this->pickupDate);
         }
 
-        if ($this->deliveryDate) {
+        if ($this->deliveryDate instanceof \DateTime) {
             $json['DeliveryDate'] = $this->formatTime($this->deliveryDate);
         }
+
+        // Sort array by key for testing consistency.
+        ksort($json);
 
         return $json;
     }
