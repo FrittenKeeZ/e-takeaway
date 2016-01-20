@@ -563,4 +563,51 @@ class ExternalOrder extends ExternalOrderBase
 
         return $json;
     }
+
+    /**
+     * Create an ExternalOrder instance from a standard data object.
+     *
+     * @param \stdClass $data
+     *
+     * @return ExternalOrder
+     */
+    public static function createFromData(\stdClass $data)
+    {
+        $externalOrder = new self($data->PartnerID, $data->RestaurantID, $data->OrderID);
+        $externalOrder
+            ->setDeliveryFee($data->DeliveryFee)
+            ->setOrderPrice($data->OrderPrice)
+            ->setPickupDate(new \DateTime($data->PickupDate))
+            ->setDeliveryDate(new \DateTime($data->DeliveryDate))
+            ->setRecipientName($data->RecipientName)
+            ->setRecipientAddress($data->RecipientAddress)
+            ->setRecipientAddressNotes($data->RecipientAddressNotes)
+            ->setRecipientPhone($data->RecipientPhone)
+            ->setRecipientCompany($data->RecipientCompany)
+            ->setRecipientCount($data->RecipientCount)
+            ->setOrderComments($data->OrderComments)
+            ->setOrderDetails($data->OrderDetails)
+        ;
+
+        // Create the reflection class.
+        $refClass = new \ReflectionClass($externalOrder);
+        // Get reflection property for id and set value.
+        $refProperty = $refClass->getProperty('id');
+        $refProperty->setAccessible(true);
+        $refProperty->setValue($externalOrder, $data->ID);
+        // Get reflection property for createDate and set value.
+        $refProperty = $refClass->getProperty('createDate');
+        $refProperty->setAccessible(true);
+        $refProperty->setValue($externalOrder, new \DateTime($data->CreateDate));
+        // Get reflection property for totalPrice and set value.
+        $refProperty = $refClass->getProperty('totalPrice');
+        $refProperty->setAccessible(true);
+        $refProperty->setValue($externalOrder, $data->TotalPrice);
+        // Get reflection property for recipientZip and set value.
+        $refProperty = $refClass->getProperty('recipientZip');
+        $refProperty->setAccessible(true);
+        $refProperty->setValue($externalOrder, $data->RecipientZip);
+
+        return $externalOrder;
+    }
 }

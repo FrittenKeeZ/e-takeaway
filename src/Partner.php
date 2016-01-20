@@ -60,6 +60,18 @@ class Partner extends Api
     }
 
     /**
+     * Converts data returned from 'CreateExternalOrder' to an ExternalOrder entity.
+     *
+     * @param \stdClass $data
+     *
+     * @return Entity\Partner\ExternalOrder
+     */
+    protected function convertCreateExternalOrderData(\stdClass $data)
+    {
+        return ExternalOrder::createFromData($data);
+    }
+
+    /**
      * Converts data returned from 'GetDeliveryInfo' to a DeliveryInfo entity.
      *
      * @param \stdClass $data
