@@ -75,8 +75,8 @@ final class Response
      */
     public function __construct($status, $statusCode)
     {
-        $this->status = $status;
-        $this->statusCode = $statusCode;
+        $this->status = (bool) $status;
+        $this->statusCode = (int) $statusCode;
     }
 
     /**
@@ -180,7 +180,7 @@ final class Response
      */
     public function setTestMode($testMode)
     {
-        $this->testMode = $testMode;
+        $this->testMode = $testMode ? true : false;
 
         return $this;
     }

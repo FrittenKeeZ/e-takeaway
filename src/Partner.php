@@ -3,6 +3,7 @@
 namespace Etakeaway;
 
 use Etakeaway\Entity\Partner\DeliveryInfo;
+use Etakeaway\Entity\Partner\ExternalOrder;
 use Etakeaway\Entity\Partner\ExternalOrderBase;
 
 /**
@@ -15,6 +16,21 @@ use Etakeaway\Entity\Partner\ExternalOrderBase;
 class Partner extends Api
 {
     /**
+     * Creates an external order for e-takeaway delivery.
+     * The same function can edit an existing order.
+     *
+     * @see http://api.e-takeaway.com/V1/Documentation/?p=F_CreateExternalOrder
+     *
+     * @param Entity\Partner\ExternalOrder $externalOrder External order to create or update.
+     *
+     * @return Entity\Response
+     */
+    public function createExternalOrder(ExternalOrder $externalOrder)
+    {
+        return $this->dispatch('CreateExternalOrder', $externalOrder);
+    }
+
+    /**
      * Cancels an existing external order, by marking it as "To be deleted".
      * It will be still visible for e-takeaway administrators, but they will know that it doesn't have to be delivered anymore.
      *
@@ -26,7 +42,7 @@ class Partner extends Api
      */
     public function cancelExternalOrder(ExternalOrderBase $externalOrder)
     {
-        return $this->dispatch('CancelExternalOrder', $externalOrder);
+        return $this->dispatch('CancelExternalOrder', $externalOrder->getBase());
     }
 
     /**

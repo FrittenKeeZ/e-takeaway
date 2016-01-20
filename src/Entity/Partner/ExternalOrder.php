@@ -2,6 +2,8 @@
 
 namespace Etakeaway\Entity\Partner;
 
+use Etakeaway\Entity\Partner\Order\Item;
+
 /**
  * ExternalOrder.
  *
@@ -16,7 +18,7 @@ class ExternalOrder extends ExternalOrderBase
      *
      * @var int
      */
-    private $id;
+    private $id = 0;
 
     /**
      * Shows when the external order was created in the e-takeaway database.
@@ -128,13 +130,6 @@ class ExternalOrder extends ExternalOrderBase
     private $orderComments;
 
     /**
-     * Details about the ordered items. You can use \r\n as new line character.
-     *
-     * @var string
-     */
-    private $orderDetails;
-
-    /**
      * List of Order\Item entities.
      *
      * @var array<Order\Item>
@@ -142,11 +137,363 @@ class ExternalOrder extends ExternalOrderBase
     private $orderItems = [];
 
     /**
+     * Get External Order ID.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get external order created date and time.
+     *
+     * @return \DateTime
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * Set delivery fee.
+     *
+     * @param float $deliveryFee
+     *
+     * @return ExternalOrder
+     */
+    public function setDeliveryFee($deliveryFee)
+    {
+        $this->deliveryFee = (float) $deliveryFee;
+
+        return $this;
+    }
+
+    /**
+     * Get delivery fee.
+     *
+     * @return float
+     */
+    public function getDeliveryFee()
+    {
+        return $this->deliveryFee;
+    }
+
+    /**
+     * Set order price.
+     *
+     * @param float $orderPrice
+     *
+     * @return ExternalOrder
+     */
+    public function setOrderPrice($orderPrice)
+    {
+        $this->orderPrice = (float) $orderPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get order price.
+     *
+     * @return float
+     */
+    public function getOrderPrice()
+    {
+        return $this->orderPrice;
+    }
+
+    /**
+     * Get total order price including e-takeaway's delivery fee.
+     *
+     * @return float
+     */
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
+    }
+
+    /**
+     * Set pickup date.
+     *
+     * @param \DateTime $pickupDate
+     *
+     * @return ExternalOrder
+     */
+    public function setPickupDate(\DateTime $pickupDate)
+    {
+        $this->pickupDate = $pickupDate;
+
+        return $this;
+    }
+
+    /**
+     * Get pickup date.
+     *
+     * @return \DateTime
+     */
+    public function getPickupDate()
+    {
+        return $this->pickupDate;
+    }
+
+    /**
+     * Set delivery date.
+     *
+     * @param \DateTime $deliveryDate
+     *
+     * @return ExternalOrder
+     */
+    public function setDeliveryDate(\DateTime $deliveryDate)
+    {
+        $this->deliveryDate = $deliveryDate;
+
+        return $this;
+    }
+
+    /**
+     * Get delivery date.
+     *
+     * @return \DateTime
+     */
+    public function getDeliveryDate()
+    {
+        return $this->deliveryDate;
+    }
+
+    /**
+     * Set recipient name.
+     *
+     * @param string $recipientName
+     *
+     * @return ExternalOrder
+     */
+    public function setRecipientName($recipientName)
+    {
+        $this->recipientName = $recipientName;
+
+        return $this;
+    }
+
+    /**
+     * Get recipient name.
+     *
+     * @return string
+     */
+    public function getRecipientName()
+    {
+        return $this->recipientName;
+    }
+
+    /**
+     * Set recipient address.
+     *
+     * @param string $recipientAddress
+     *
+     * @return ExternalOrder
+     */
+    public function setRecipientAddress($recipientAddress)
+    {
+        $this->recipientAddress = $recipientAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get recipient address.
+     *
+     * @return string
+     */
+    public function getRecipientAddress()
+    {
+        return $this->recipientAddress;
+    }
+
+    /**
+     * Set recipient address notes.
+     *
+     * @param string $recipientAddressNotes
+     *
+     * @return ExternalOrder
+     */
+    public function setRecipientAddressNotes($recipientAddressNotes)
+    {
+        $this->recipientAddressNotes = $recipientAddressNotes;
+
+        return $this;
+    }
+
+    /**
+     * Get recipient address notes.
+     *
+     * @return string
+     */
+    public function getRecipientAddressNotes()
+    {
+        return $this->recipientAddressNotes;
+    }
+
+    /**
+     * Set recipient phone.
+     *
+     * @param string $recipientPhone
+     *
+     * @return ExternalOrder
+     */
+    public function setRecipientPhone($recipientPhone)
+    {
+        $this->recipientPhone = $recipientPhone;
+
+        return $this;
+    }
+
+    /**
+     * Get recipient phone.
+     *
+     * @return string
+     */
+    public function getRecipientPhone()
+    {
+        return $this->recipientPhone;
+    }
+
+    /**
+     * Set recipient company.
+     *
+     * @param string $recipientCompany
+     *
+     * @return ExternalOrder
+     */
+    public function setRecipientCompany($recipientCompany)
+    {
+        $this->recipientCompany = $recipientCompany;
+
+        return $this;
+    }
+
+    /**
+     * Get recipient company.
+     *
+     * @return string
+     */
+    public function getRecipientCompany()
+    {
+        return $this->recipientCompany;
+    }
+
+    /**
+     * Set recipient location.
+     *
+     * @param string $recipientLocation
+     *
+     * @return ExternalOrder
+     */
+    public function setRecipientLocation($recipientLocation)
+    {
+        $this->recipientLocation = $recipientLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get recipient zip code.
+     * This value is based on what is sent in recipient location.
+     *
+     * @return string
+     */
+    public function getRecipientZip()
+    {
+        return $this->recipientZip;
+    }
+
+    /**
+     * Set recipient count.
+     *
+     * @param int $recipientCount
+     *
+     * @return ExternalOrder
+     */
+    public function setRecipientCount($recipientCount)
+    {
+        $this->recipientCount = (int) $recipientCount;
+
+        return $this;
+    }
+
+    /**
+     * Get recipient count.
+     *
+     * @return int
+     */
+    public function getRecipientCount()
+    {
+        return $this->recipientCount;
+    }
+
+    /**
+     * Set order comments.
+     *
+     * @param string $orderComments
+     *
+     * @return ExternalOrder
+     */
+    public function setOrderComments($orderComments)
+    {
+        $this->orderComments = $orderComments;
+
+        return $this;
+    }
+
+    /**
+     * Get order comments.
+     *
+     * @return string
+     */
+    public function getOrderComments()
+    {
+        return $this->orderComments;
+    }
+
+    /**
+     * Set order details.
+     *
+     * @param string $orderDetails String representation of order items.
+     *                             Expected format is "<amount1>x<name1>\r\n<amount2>x<name2>" etc.
+     *                             The item delimiter '\r\n' is litteral and not the ascii codes.
+     *
+     * @return ExternalOrder
+     */
+    public function setOrderDetails($orderDetails)
+    {
+        $this->clearOrderItems();
+
+        $items = explode('\r\n', $orderDetails);
+        foreach ($items as $item) {
+            $this->orderItems[] = Item::createFromString($item);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get order details.
+     *
+     * @return string String representation of order items.
+     *                Format is "<amount1>x<name1>\r\n<amount2>x<name2>" etc.
+     *                The item delimiter '\r\n' is litteral and not the ascii codes.
+     */
+    public function getOrderDetails()
+    {
+        return implode('\r\n', $this->orderItems);
+    }
+
+    /**
      * Adds an Order\Item entity to the list.
      *
      * @param Order\Item $item
      */
-    public function addOrderItem(Order\Item $item)
+    public function addOrderItem(Item $item)
     {
         $this->orderItems[] = $item;
     }
@@ -180,7 +527,7 @@ class ExternalOrder extends ExternalOrderBase
             'RecipientAddress' => $this->recipientAddress,
             'RecipientPhone' => $this->recipientPhone,
             'RecipientLocation' => $this->recipientLocation,
-            'OrderDetails' => implode('\r\n', $this->orderItems),
+            'OrderDetails' => $this->getOrderDetails(),
         ];
 
         if ($this->deliveryFee > 0) {

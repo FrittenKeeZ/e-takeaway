@@ -232,7 +232,7 @@ class DeliveryInfo implements DataInterface
      */
     public static function createFromData(\stdClass $data)
     {
-        $deliveryInfo = new DeliveryInfo($data->PartnerID, $data->RestaurantID);
+        $deliveryInfo = new self($data->PartnerID, $data->RestaurantID);
         $deliveryInfo
             ->setPickupDate(new \DateTime($data->PickupDate))
             ->setDeliveryDate(new \DateTime($data->DeliveryDate))

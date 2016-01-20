@@ -77,6 +77,22 @@ class ExternalOrderBase implements DataInterface
     }
 
     /**
+     * Returns a proper ExternalOrderBase instance even for derived classes.
+     *
+     * @return ExternalOrderBase
+     */
+    public function getBase()
+    {
+        // If this object is an actual ExternalOrderBase instance, just return it.
+        if (get_class() === get_class($this)) {
+            return $this;
+        }
+
+        // Create a new ExternalOrderBase.
+        return new self($this->partnerId, $this->restaurantId, $this->orderId);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function jsonSerialize()
