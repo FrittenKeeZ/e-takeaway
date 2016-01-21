@@ -46,8 +46,8 @@ final class DataBasic implements DataInterface
 
         }
 
-        if (isset($this[$property])) {
-            return $this[$property];
+        if (isset($this->data[$property])) {
+            return $this->data[$property];
         }
 
         return null;
