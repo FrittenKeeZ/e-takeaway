@@ -463,7 +463,7 @@ class ExternalOrder extends ExternalOrderBase
      *
      * @param string $orderDetails String representation of order items.
      *                             Expected format is "<amount1>x<name1>\r\n<amount2>x<name2>" etc.
-     *                             The item delimiter '\r\n' is litteral and not the ascii codes.
+     *                             The item delimiter "\r\n" is the control character ascii codes.
      *
      * @return ExternalOrder
      */
@@ -471,7 +471,7 @@ class ExternalOrder extends ExternalOrderBase
     {
         $this->clearOrderItems();
 
-        $items = explode('\r\n', $orderDetails);
+        $items = explode("\r\n", $orderDetails);
         foreach ($items as $item) {
             $this->orderItems[] = Item::createFromString($item);
         }
@@ -484,11 +484,11 @@ class ExternalOrder extends ExternalOrderBase
      *
      * @return string String representation of order items.
      *                Format is "<amount1>x<name1>\r\n<amount2>x<name2>" etc.
-     *                The item delimiter '\r\n' is litteral and not the ascii codes.
+     *                The item delimiter "\r\n" is the control character ascii codes.
      */
     public function getOrderDetails()
     {
-        return implode('\r\n', $this->orderItems);
+        return implode("\r\n", $this->orderItems);
     }
 
     /**
