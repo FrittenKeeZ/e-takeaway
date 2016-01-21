@@ -3,6 +3,7 @@
 namespace Etakeaway\Entity\Partner;
 
 use Etakeaway\Entity\Partner\Order\Item;
+use Etakeaway\Entity\Utils\TimeFormatTrait;
 
 /**
  * ExternalOrder.
@@ -13,6 +14,8 @@ use Etakeaway\Entity\Partner\Order\Item;
  */
 class ExternalOrder extends ExternalOrderBase
 {
+    use TimeFormatTrait;
+
     /**
      * External Order ID, a unique identifier in the e-takeaway database.
      *
