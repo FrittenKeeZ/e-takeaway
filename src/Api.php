@@ -87,7 +87,20 @@ class Api
         $response = curl_exec($ch);
         curl_close($ch);
 
-        return $this->convertResponseData($response);
+        // Decode response as JSON and handle unexpected result.
+        $json = json_decode($response);
+        if (!$json) {
+            $json = new \stdClass();
+            $json->Status = false;
+            $json->StatusCode = 10000;
+            $json->StatusMessage = 'Error';
+            $json->ErrorMessage = 'Invalid JSON response: ' . json_last_error_msg();
+            $json->Language = $this->request->getLanguage();
+            $json->TestMode = $this->request->getTestMode();
+            $json->Function = $this->request->getFunction();
+        }
+
+        return $this->convertResponseData($json);
     }
 
     /**

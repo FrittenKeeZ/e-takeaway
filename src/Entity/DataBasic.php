@@ -52,4 +52,12 @@ final class DataBasic implements DataInterface
 
         return null;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize()
+    {
+        return $this->data;
+    }
 }
