@@ -43,7 +43,6 @@ final class DataBasic implements DataInterface
     {
         if (!is_string($property)) {
             throw new \InvalidArgumentException('Property argument must be a string, was: ' . gettype($property));
-
         }
 
         if (isset($this->data[$property])) {
