@@ -52,7 +52,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-downloads]: https://img.shields.io/packagist/dt/frittenkeez/e-takeaway.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/frittenkeez/e-takeaway
-[link-travis]: https://travis-ci.org/frittenkeez/e-takeaway
+[link-travis]: https://travis-ci.org/FrittenKeeZ/e-takeaway
 [link-downloads]: https://packagist.org/packages/frittenkeez/e-takeaway
 [link-author]: https://github.com/FrittenKeeZ
 [link-contributors]: ../../contributors
