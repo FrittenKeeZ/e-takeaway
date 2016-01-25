@@ -252,7 +252,8 @@ final class Request implements \JsonSerializable
      * Clone callback method.
      * Resets 'function' and 'data' properties.
      */
-    public function __clone() {
+    public function __clone()
+    {
         $this->function = null;
         $this->data = null;
     }
