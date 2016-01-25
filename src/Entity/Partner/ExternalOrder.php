@@ -525,12 +525,12 @@ class ExternalOrder extends ExternalOrderBase
     public function jsonSerialize()
     {
         $json = parent::jsonSerialize() + [
-            'OrderPrice' => $this->orderPrice,
-            'RecipientName' => $this->recipientName,
-            'RecipientAddress' => $this->recipientAddress,
-            'RecipientPhone' => $this->recipientPhone,
+            'OrderPrice'        => $this->orderPrice,
+            'RecipientName'     => $this->recipientName,
+            'RecipientAddress'  => $this->recipientAddress,
+            'RecipientPhone'    => $this->recipientPhone,
             'RecipientLocation' => $this->recipientLocation,
-            'OrderDetails' => $this->getOrderDetails(),
+            'OrderDetails'      => $this->getOrderDetails(),
         ];
 
         if ($this->deliveryFee > 0) {

@@ -125,13 +125,13 @@ class Api
     protected function formatCurlOptions(Request $request)
     {
         return [
-            \CURLOPT_HEADER => false,
+            \CURLOPT_HEADER         => false,
             \CURLOPT_RETURNTRANSFER => true,
-            \CURLOPT_POST => true,
+            \CURLOPT_POST           => true,
             // Pass request data as an array to force the Content-Type header to be "multipart/form-data".
-            \CURLOPT_POSTFIELDS => ['jsonrequest' => json_encode($request)],
+            \CURLOPT_POSTFIELDS     => ['jsonrequest' => json_encode($request)],
             // Eliminate the 'Expect' header to avoid sudden 417 Expectation Failed errors.
-            \CURLOPT_HTTPHEADER => ['Expect:'],
+            \CURLOPT_HTTPHEADER     => ['Expect:'],
         ];
     }
 

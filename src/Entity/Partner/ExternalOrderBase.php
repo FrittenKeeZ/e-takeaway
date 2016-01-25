@@ -98,9 +98,9 @@ class ExternalOrderBase implements DataInterface
     public function jsonSerialize()
     {
         $json = [
-            'PartnerID' => $this->partnerId,
+            'PartnerID'    => $this->partnerId,
             'RestaurantID' => $this->restaurantId,
-            'OrderID' => $this->orderId,
+            'OrderID'      => $this->orderId,
         ];
 
         // Sort array by key for testing consistency.

@@ -55,6 +55,6 @@ class Item
     {
         list($amount, $name) = explode('x', $str, 2);
 
-        return new Item($name, $amount);
+        return new self($name, $amount);
     }
 }

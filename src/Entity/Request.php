@@ -263,14 +263,14 @@ final class Request implements \JsonSerializable
     public function jsonSerialize()
     {
         $json = [
-            'Website' => $this->website,
-            'ClientCode' => $this->clientCode,
+            'Website'       => $this->website,
+            'ClientCode'    => $this->clientCode,
             'ClientVersion' => $this->clientVersion,
-            'Language' => $this->language,
-            'TestMode' => $this->testMode,
-            'UserToken' => $this->userToken,
-            'Function' => $this->function,
-            'Data' => $this->data,
+            'Language'      => $this->language,
+            'TestMode'      => $this->testMode,
+            'UserToken'     => $this->userToken,
+            'Function'      => $this->function,
+            'Data'          => $this->data,
         ];
 
         // Sort array by key for testing consistency.

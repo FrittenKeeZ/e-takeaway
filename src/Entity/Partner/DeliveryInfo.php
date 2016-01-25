@@ -204,9 +204,9 @@ class DeliveryInfo implements DataInterface
     public function jsonSerialize()
     {
         $json = [
-            'PartnerID' => $this->partnerId,
+            'PartnerID'    => $this->partnerId,
             'RestaurantID' => $this->restaurantId,
-            'Location' => $this->location,
+            'Location'     => $this->location,
         ];
 
         if ($this->pickupDate instanceof \DateTime) {

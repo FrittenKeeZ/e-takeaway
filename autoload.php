@@ -1,13 +1,14 @@
 <?php
+
 spl_autoload_register(function ($class) {
     // The package namespace.
     $ns = 'Etakeaway';
     // What prefixes should be recognized?
-    $prefixes = array(
-        "{$ns}\\" => array(
+    $prefixes = [
+        "{$ns}\\" => [
             __DIR__ . '/src',
-        ),
-    );
+        ],
+    ];
     // Go through the prefixes.
     foreach ($prefixes as $prefix => $dirs) {
         // Does the requested class match the namespace prefix?
