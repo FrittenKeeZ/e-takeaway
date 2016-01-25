@@ -32,7 +32,8 @@ class Partner extends Api
 
     /**
      * Cancels an existing external order, by marking it as "To be deleted".
-     * It will be still visible for e-takeaway administrators, but they will know that it doesn't have to be delivered anymore.
+     * It will be still visible for e-takeaway administrators,
+     * but they will know that it doesn't have to be delivered anymore.
      *
      * @see http://api.e-takeaway.com/V1/Documentation/?p=F_CancelExternalOrder
      *
