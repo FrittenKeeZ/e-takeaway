@@ -130,7 +130,7 @@ class Api
             \CURLOPT_HTTPHEADER     => ['Expect:'],
             \CURLOPT_POST           => true,
             // Pass request data as an urlencoded string to prevent parsing errors in the API.
-            \CURLOPT_POSTFIELDS     => http_build_query(['jsonrequest' => json_encode($request)]),
+            \CURLOPT_POSTFIELDS     => http_build_query(['jsonrequest' => json_encode($request, JSON_HEX_AMP)]),
             \CURLOPT_RETURNTRANSFER => true,
         ];
     }
